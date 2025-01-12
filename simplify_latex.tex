@@ -1,0 +1,185 @@
+%------------------ call packages -----------------
+\documentclass{article} % Defines the document type (e.g., article, report, book) [12pt] default size of all the document
+% \documentclass[twocolumn]{article} % for a two column article
+
+\usepackage{geometry} % for page settings like size and margins
+
+\usepackage{amsmath} % for math functions
+
+% clickable table of content
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=red, citecolor=green, bookmarks=true, bookmarksopen=true]{hyperref}
+\usepackage{tocloft} % adjust table of contents
+
+\usepackage{graphicx} % For figures (images/ charts/ flowcharts...)
+\usepackage{chngcntr} % For modifying numbering of tables or figures
+
+\usepackage{booktabs} % For better-looking tables
+\usepackage{multirow} %complex tables
+\usepackage[table]{xcolor} % color of table rows odd and even
+
+\usepackage[backend=biber, style=numeric]{biblatex} % for referencing (bibilography) %ieee, authoryear for styles
+
+\usepackage{titlesec} % for change setting like size font_family color of headings, sections
+
+% ---------------- customization/ user settings -------------------------
+\geometry{
+    a4paper, % Paper size
+    portrait,
+    left=2cm, % Left margin
+    right=2cm, % Right margin
+    top=2cm, % Top margin
+    bottom=2cm % Bottom margin
+}
+
+\setcounter{secnumdepth}{5} % Number up to subsubparagraph
+\setcounter{tocdepth}{5}    % Include up to subsubparagraph in TOC:table of contents
+
+% Customize section font size/ family
+\titleformat{\section}
+  {\normalfont\fontsize{16}{19}\bfseries\color{blue}}{\thesection}{1em}{} %16 fontsize 19linespace | bfseries: bold | instead of normal font we can write our font name
+\titleformat{\subsection}
+  {\normalfont\fontsize{14}{17}\bfseries}{\thesubsection}{1em}{}
+
+\graphicspath{{"//wsl.localhost/Ubuntu/home/mrrahimy/figures/"}} %define folder of figures
+
+%set color of odd and even rows in general
+%\rowcolors{1}{gray!20}{white} % Odd rows: light gray, Even rows: white  general for all tables
+
+\counterwithin{figure}{section} % Add section number as a prefix to figure numbers
+\counterwithin{table}{section} %add section number as prefix of tables
+
+\addbibresource{references.bib} % Load your .bib file for citation and referencing
+% most of articles and books have bibtex style in cite section
+% or doi link could used for referencing by doi2bib website
+
+% Customize the TOC table of contents
+\setlength{\cftsecindent}{0pt} % No indentation for sections
+\setlength{\cftsubsecindent}{0.25cm} % Indentation for subsections
+\setlength{\cftsubsubsecindent}{0.5cm} % Indentation for subsubsections
+\setlength{\cftparaindent}{0.75cm}
+\setlength{\cftsubparaindent}{1cm}
+\renewcommand{\cftdotsep}{1} % Spacing between dots
+
+% ----------------------- start of document-----------------------
+\title{Mohammad First LaTeX Document}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+\maketitle % Generates the title
+\thispagestyle{empty} %remove page number
+\newpage
+
+% table of contents
+\pagenumbering{roman} %roman for table of contents
+\tableofcontents % Add the table of contents here
+\newpage % Force content to start on a new page
+\listoftables    % List of tables %shows captions
+\newpage % Force content to start on a new page
+\listoffigures %charts, diagrams, and other figures
+\newpage % Force content to start on a new page
+
+\pagenumbering{arabic} %reset to page 1
+\section{Introduction}
+Hello, world! This is my first LaTeX document.
+
+% insnert figure
+\begin{figure}[h] %h:here
+  \centering
+  \includegraphics[scale=0.5]{"Screenshot 2024-06-03 130722.png"} % or can define width=4cm, height=3cm
+  \caption{An example figure.}
+  \label{fig:test} %for referencing in text
+\end{figure}
+As shown in Figure \ref{fig:test}, this is an example image.
+% end of figure
+
+\subsection{First subsection}
+random notes generation
+\subsubsection{First Subsubsection}
+Here is a mathematical equation:
+\[
+E = mc^2
+\]
+\paragraph{First Paragraph} 
+\par %this go to next paragraph
+This is the first paragraph.
+\footnote{This is the footnote text.} % insert footnote
+
+% for table we can use df to latex by python ---> latex_code = df.to_latex(index=False, multicolumn=True, multirow=True)
+% then using \input{table.tex} that is the export of python
+% there are more tools to convert a table for latex in easy and short way
+
+% here we add a manual table
+\begin{table}[h]
+  \rowcolors{1}{gray!20}{white} %color od rows odd and even
+    \centering
+    \caption{An example table.}      
+    \begin{tabular}{cccc}
+      \toprule
+      \rowcolor{gray!50} % Header row color
+      Column 1 & Column 2 & Column 3 & Column 3 \\
+      \midrule
+      1 & 2 & 3 & 3 \\
+      4 & 5 & 6 & 3 \\
+      4 & 5 & 6 & 3 \\
+      \bottomrule
+    \end{tabular}
+    \label{tab:test} %for referencing in text  tab is not keyword, but beneficial to manage lable names!
+  \end{table}
+%end of table
+As you see in table \ref{tab:test} there is no way
+\subparagraph{First Subparagraph}
+This is the first subparagraph.
+According to Einstein \cite{einstein1905}, the theory of relativity is groundbreaking. %reference from .bib file 
+Knuth's work on TeX \cite{knuth1984} is also widely recognized.
+
+%complex table
+\begin{table}[h]
+    \centering
+    \caption{A mixed table.} 
+    \begin{tabular}{|l|c|r|c|} %left/ center/ right
+        \hline
+        \multirow{2}{*}{2000} & \multicolumn{2}{c|}{2010} & 2020 \\
+        \cline{2-4} % similar to hline both are horizontal
+        & Column 2 & Column 3 & Column 4 \\
+        \hline
+        1 & 2 & 3 & 4 \\
+        \hline
+        5 & \multicolumn{2}{c|}{6} & 7 \\
+        \hline
+    \end{tabular}
+\end{table}
+%end of complex table  
+
+\section{conclusion}
+\par
+The quadratic formula is:
+\[
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
+
+\par
+\[
+\nabla \times \mathbf{B} = \mu_0^2 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\]
+
+\[
+  A matrix= 
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\]
+
+\[
+\vec{v} = \begin{pmatrix}
+  v_x \\
+  v_y \\
+  v_z
+  \end{pmatrix}
+\]
+
+\newpage
+\printbibliography
+\end {document}
